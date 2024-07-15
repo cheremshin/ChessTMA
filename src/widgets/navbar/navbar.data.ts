@@ -22,6 +22,7 @@ export const menu: IMenuLink[] = [
         name: "Главная",
         url: "/",
         icon: HomeIcon,
+        bigButton: true,
     },
     {
         name: "История",
