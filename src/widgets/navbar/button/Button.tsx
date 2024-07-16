@@ -28,7 +28,7 @@ const CommonButton : FC<IMenuItem> = ({item}) => {
     return (
         <Link href={item.url} className="flex flex-col items-center">
             <Image src={item.icon} alt="" width={35} height={35}/>
-            <p className="">{ item.name }</p>
+            { item.name }
         </Link>
     )
 }
