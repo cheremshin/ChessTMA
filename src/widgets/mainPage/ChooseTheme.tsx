@@ -1,6 +1,6 @@
 const ChooseTheme = () => {
     return (
-        <div className="
+        <a className="
             w-full
             py-2
             flex
@@ -11,7 +11,7 @@ const ChooseTheme = () => {
             text-white
         ">
             Выбрать тему
-        </div>
+        </a>
     )
 }
 
