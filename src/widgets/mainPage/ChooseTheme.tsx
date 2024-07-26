@@ -1,6 +1,9 @@
+import Link from "next/link";
+
+
 const ChooseTheme = () => {
     return (
-        <a className="
+        <Link href={"/themes"} className="
             w-full
             py-2
             flex
@@ -11,7 +14,7 @@ const ChooseTheme = () => {
             text-white
         ">
             Выбрать тему
-        </a>
+        </Link>
     )
 }
 
