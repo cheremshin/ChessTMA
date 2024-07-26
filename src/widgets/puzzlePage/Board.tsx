@@ -25,10 +25,6 @@ export const Board = () => {
     const [moveTo, setMoveTo] = useState<Square | null>(null);
     const [optionSquares, setOptionSquares] = useState<{ [key: string]: SquareHighlight }>({});
 
-    useEffect(() => {
-        console.log("game", game);
-    });
-
     const getMoveOptions: FC<Square> = (square) => {
         const moves = game.moves({
             square,
@@ -86,11 +82,7 @@ export const Board = () => {
 
             if (!foundMove) {
                 const hasMoveOptions = getMoveOptions(square);
-
-                if (hasMoveOptions) {
-                    setMoveTo(hasMoveOptions ? square : null);
-                }
-
+                setMoveFrom(hasMoveOptions ? square : "");
                 return;
             }
 
@@ -124,6 +116,7 @@ export const Board = () => {
         <Chessboard
             position={fen}
             boardOrientation={side}
+            arePiecesDraggable={false}
             onSquareClick={onSquareClick}
             customSquareStyles={{
                 ...optionSquares,
