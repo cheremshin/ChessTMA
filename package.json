@@ -11,8 +11,10 @@
   "dependencies": {
     "@tanstack/react-query": "^5.50.1",
     "@telegram-apps/sdk-react": "^1.1.0",
+    "chess.js": "^1.0.0-beta.8",
     "next": "14.2.4",
     "react": "^18",
+    "react-chessboard": "^4.6.0",
     "react-dom": "^18",
     "telegram-webapps-types-new": "^1.2.0"
   },
