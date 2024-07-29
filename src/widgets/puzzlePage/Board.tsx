@@ -17,13 +17,45 @@ interface Move {
 }
 
 export const Board = () => {
-    const { game, side } = useContext(BoardContext);
+    const { game, side, solve, aiSteps, setCompleted } = useContext(BoardContext);
 
     const [fen, setFen] = useState(game.fen());
 
     const [moveFrom, setMoveFrom] = useState<string>("");
     const [moveTo, setMoveTo] = useState<Square | null>(null);
     const [optionSquares, setOptionSquares] = useState<{ [key: string]: SquareHighlight }>({});
+    const [lastMoveSquares, setLastMoveSquares] = useState<{ [key: string]: SquareHighlight }>({});
+
+
+    /**
+     * Make init ai step
+     */
+    useEffect(() => {
+        setTimeout(() => {
+            const initStep = aiSteps.shift();
+    
+            if (initStep) {
+                const move = game.move(initStep);
+    
+                if (move) {
+                    setFen(game.fen());
+                    showLastMove(move.from, move.to);
+                }
+            }
+        }, 500);
+    }, []);
+    
+
+    const showLastMove = (moveFrom: Square, moveTo: Square) => {
+        setLastMoveSquares({
+            [moveFrom]: {
+                "background": "rgba(209, 109, 38, .6)"
+            },
+            [moveTo]: {
+                "background": "rgba(209, 109, 38, .6)"
+            },
+        });
+    };
 
     const getMoveOptions: FC<Square> = (square) => {
         const moves = game.moves({
@@ -47,16 +79,37 @@ export const Board = () => {
                 'borderRadius': "50%",
             };
 
+            if (lastMoveSquares[move.to] !== undefined) {
+                squares[move.to] = {
+                    ...squares[move.to],
+                    "background" : `rgba(209, 109, 38, .8), ${squares[move.to].background}`,
+                }
+            }
+
             return move;
         });
 
         squares[square] = {
-            "background": "rgba(255, 255, 0, 0.4)",
-        }
+            "background": "rgba(255, 255, 0, 0.5)",
+        };
 
         setOptionSquares(squares);
 
         return true;
+    };
+
+    const makeAIStep = () => {
+        const move = aiSteps.shift();
+
+        if (move) {
+            const square = game.move(move);
+            setFen(game.fen());
+            showLastMove(square.from, square.to);
+
+            return;
+        }
+
+        setCompleted(true);
     };
 
     const onSquareClick = (square: Square) => {
@@ -105,6 +158,19 @@ export const Board = () => {
 
             setFen(game.fen());
 
+            const valid = solve[0] == move.from + move.to;
+
+            if (!valid) {
+                setTimeout(() => {
+                    game.undo();
+                    setFen(game.fen());
+                }, 300);
+            } else {
+                solve.shift();
+                showLastMove(move.from, move.to);
+                setTimeout(makeAIStep, 300);
+            }
+
             setMoveFrom("");
             setMoveTo(null);
             setOptionSquares({});
@@ -119,6 +185,7 @@ export const Board = () => {
             arePiecesDraggable={false}
             onSquareClick={onSquareClick}
             customSquareStyles={{
+                ...lastMoveSquares,
                 ...optionSquares,
             }}
         />
