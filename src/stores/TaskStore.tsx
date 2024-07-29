@@ -1,6 +1,3 @@
-import { Task } from "@/shared/types/types"
-
-
 export const getTask = () : any => {
     const tasks: any[] = [
         {

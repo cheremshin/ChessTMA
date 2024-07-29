@@ -1,9 +1,9 @@
-import { Task } from "@/shared/types/types";
+import { Puzzle } from "@/shared/types/types";
 import { getTask } from "@/stores/TaskStore";
 import { useEffect } from "react";
 
 type ReturnT = {
-    task: Task;
+    task: Puzzle;
 };
 
 const usePuzzlePage = (): ReturnT => {

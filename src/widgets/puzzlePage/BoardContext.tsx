@@ -5,19 +5,10 @@ import {
     useState
 } from "react";
 import { Chess } from "chess.js";
-import { BoardSide, Task } from "@/shared/types/types";
+import { Puzzle } from "@/shared/types/types";
+import { Game, BoardSide } from "@/shared/types/board";
 import usePuzzlePage from "@/shared/hooks/usePuzzlePage";
 
-
-type Game = {
-    fen: string;
-    solve: string[];
-    aiSteps: string[];
-    game: Chess;
-    side: BoardSide;
-    completed: boolean;
-    setCompleted: (completed: boolean) => void;
-};
 
 export const BoardContext = createContext<Game>({
     fen: "",
