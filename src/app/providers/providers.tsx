@@ -8,14 +8,10 @@ interface IPropsProviders {
 }
 
 const Providers = ({children}: IPropsProviders) => {
-    const queryClient = new QueryClient();
-
     return (
-        <QueryClientProvider client={queryClient}>
             <WebAppProvider>
                 {children}
             </WebAppProvider>
-        </QueryClientProvider>
     )
 }
 
