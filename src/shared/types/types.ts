@@ -43,4 +43,6 @@ export type BoardPosition = Map<Square, Piece>;
 export type Task = {
     id: number;
     fen: string;
+    initStep: string;
+    solve: string;
 };
