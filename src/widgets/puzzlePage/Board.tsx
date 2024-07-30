@@ -1,8 +1,9 @@
 import { Chessboard } from "react-chessboard";
-import { Chess, Piece, Square } from "chess.js";
-import { useEffect, useState, useContext, FC } from "react";
+import { Chess, Square } from "chess.js";
+import { useEffect, useRef, useState, useContext, FC } from "react";
 
 import { BoardContext } from "./BoardContext";
+import { SolveStatus } from "@/shared/types/board";
 
 
 interface SquareHighlight {
@@ -10,41 +11,49 @@ interface SquareHighlight {
     borderRadius?: string;
 }
 
-interface Move {
-    from: Square;
-    to: Square;
-    promotion?: string;
-}
 
 export const Board = () => {
-    const { game, side, solve, aiSteps, setCompleted } = useContext(BoardContext);
+    const {
+        fen,
+        side,
+        solve,
+        aiSteps,
+        status,
+        setStatus,
+        completed,
+        setCompleted,
+    } = useContext(BoardContext);
 
-    const [fen, setFen] = useState(game.fen());
+    const aiStepsRef = useRef<string[]>(aiSteps);
+    const [game, setGame] = useState(new Chess(fen));
 
     const [moveFrom, setMoveFrom] = useState<string>("");
     const [moveTo, setMoveTo] = useState<Square | null>(null);
     const [optionSquares, setOptionSquares] = useState<{ [key: string]: SquareHighlight }>({});
     const [lastMoveSquares, setLastMoveSquares] = useState<{ [key: string]: SquareHighlight }>({});
 
+    useEffect(() => {
+        if (completed && status == SolveStatus.inProgress) {
+            setStatus(SolveStatus.success);
+        }
+    }, [completed]);
 
     /**
      * Make init ai step
      */
     useEffect(() => {
         setTimeout(() => {
-            const initStep = aiSteps.shift();
+            const initStep = aiStepsRef.current.shift();
     
             if (initStep) {
                 const move = game.move(initStep);
     
                 if (move) {
-                    setFen(game.fen());
                     showLastMove(move.from, move.to);
                 }
             }
         }, 500);
     }, []);
-    
 
     const showLastMove = (moveFrom: Square, moveTo: Square) => {
         setLastMoveSquares({
@@ -99,11 +108,10 @@ export const Board = () => {
     };
 
     const makeAIStep = () => {
-        const move = aiSteps.shift();
+        const move = aiStepsRef.current.shift();
 
         if (move) {
             const square = game.move(move);
-            setFen(game.fen());
             showLastMove(square.from, square.to);
 
             return;
@@ -141,6 +149,8 @@ export const Board = () => {
 
             setMoveTo(square);
 
+            const gameCopy = new Chess(game.fen());
+
             const move = game.move({
                 from: moveFrom as Square,
                 to: square,
@@ -156,14 +166,13 @@ export const Board = () => {
                 return;
             }
 
-            setFen(game.fen());
-
             const valid = solve[0] == move.from + move.to;
 
             if (!valid) {
                 setTimeout(() => {
                     game.undo();
-                    setFen(game.fen());
+                    setGame(gameCopy);
+                    setStatus(SolveStatus.fail);
                 }, 300);
             } else {
                 solve.shift();
@@ -179,15 +188,19 @@ export const Board = () => {
     };
 
     return (
-        <Chessboard
-            position={fen}
-            boardOrientation={side}
-            arePiecesDraggable={false}
-            onSquareClick={onSquareClick}
-            customSquareStyles={{
-                ...lastMoveSquares,
-                ...optionSquares,
-            }}
-        />
+        <div className="flex mx-[30px] h-full items-center pb-[200px]">
+            <div className="w-full bg-[#ededed] p-1 rounded-[6px]">
+            <Chessboard
+                position={game.fen()}
+                boardOrientation={side}
+                arePiecesDraggable={false}
+                onSquareClick={onSquareClick}
+                customSquareStyles={{
+                    ...lastMoveSquares,
+                    ...optionSquares,
+                }}
+            />
+            </div>
+        </div>
     );
 };

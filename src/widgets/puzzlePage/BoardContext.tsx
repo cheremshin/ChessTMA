@@ -1,12 +1,14 @@
 import { 
+    FC,
     ReactNode,
     createContext,
+    useEffect,
     useRef,
     useState
 } from "react";
 import { Chess } from "chess.js";
 import { Puzzle } from "@/shared/types/types";
-import { Game, BoardSide } from "@/shared/types/board";
+import { Game, BoardSide, SolveStatus } from "@/shared/types/board";
 import usePuzzlePage from "@/shared/hooks/usePuzzlePage";
 
 
@@ -14,8 +16,10 @@ export const BoardContext = createContext<Game>({
     fen: "",
     solve: [],
     aiSteps: [],
-    game: new Chess(),
     side: "white",
+    rating: 0,
+    status: SolveStatus.inProgress,
+    setStatus: () => {},
     completed: false,
     setCompleted: () => {},
 });
@@ -24,11 +28,11 @@ interface Props {
     children: ReactNode;
 };
 
-export const BoardContextProvider = ({ children }: Props) => {
+export const BoardContextProvider: FC<Props> = ({children}) => {
     const { task } = usePuzzlePage();
     const { fen, solve } = task;
-    const game = new Chess(fen);
 
+    const [status, setStatus] = useState(SolveStatus.inProgress);
     const [completed, setCompleted] = useState(false);
 
     const splitMoves = solve.split(" ");
@@ -38,13 +42,16 @@ export const BoardContextProvider = ({ children }: Props) => {
 
     const side = useRef<BoardSide>(fen.split(" ")[1] === "w" ? "black" : "white");
 
+
     return (
         <BoardContext.Provider value={{
             fen,
             solve: playerSteps,
             aiSteps,
-            game,
             side: side.current,
+            rating: 2100,
+            status,
+            setStatus,
             completed,
             setCompleted,
         }}>
