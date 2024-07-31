@@ -3,7 +3,6 @@ import ThemeBlock from "@/widgets/themesPage/ThemeBlock";
 
 import styles from "./page.module.css";
 
-import { themes } from "./themes.data";
 import Header from "@/widgets/themesPage/Header";
 
 
@@ -12,7 +11,7 @@ const ThemesPage = () => {
         <>
             <Header />
             <div className={styles.container}>
-                { themes.map((theme) => <ThemeBlock key={theme.name}/>) }
+                {/* { themes.map((theme) => <ThemeBlock key={theme.name}/>) } */}
             </div>
             <Navbar />
         </>

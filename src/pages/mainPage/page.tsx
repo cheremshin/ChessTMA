@@ -7,6 +7,7 @@ import styles from "./page.module.css";
 import Title from "@/widgets/mainPage/Title";
 import ChessImage from "@/widgets/mainPage/ChessImage";
 
+
 const MainPage = () => {
     return (
         <>

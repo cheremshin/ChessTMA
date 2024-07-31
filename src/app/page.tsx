@@ -12,7 +12,8 @@ export default function Home() {
         {app.version? (
             <MainPage />
         ) : (
-            "loading"
+            <div className="h-full w-full p-30 bg-gray-100 rounded-2xl">
+            </div>
         )}
     </>
   );
