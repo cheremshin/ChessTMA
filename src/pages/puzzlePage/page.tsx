@@ -9,12 +9,10 @@ import Header from "@/widgets/puzzlePage/Header";
 const PuzzlePage = () => {
     return (
         <>
-            <BoardContextProvider>
-                <Header />
-                <StatusBlock />
-                <Board />
-                <FinishScreen />
-            </BoardContextProvider>
+            <Header />
+            <StatusBlock />
+            <Board />
+            <FinishScreen />
             <Navbar />
         </>
     );

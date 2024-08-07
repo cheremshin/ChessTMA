@@ -9,7 +9,7 @@ import {
 import { Chess } from "chess.js";
 import { Puzzle } from "@/shared/types/types";
 import { Game, BoardSide, SolveStatus } from "@/shared/types/board";
-import usePuzzlePage from "@/shared/hooks/usePuzzlePage";
+import { Task } from "@/shared/types/api/tasks/TaskDTO";
 
 
 export const BoardContext = createContext<Game>({
@@ -25,12 +25,15 @@ export const BoardContext = createContext<Game>({
 });
 
 interface Props {
+    task: Task;
     children: ReactNode;
 };
 
-export const BoardContextProvider: FC<Props> = ({children}) => {
-    const { task } = usePuzzlePage();
-    const { fen, solve } = task;
+export const BoardContextProvider: FC<Props> = (props) => {
+    const { task, children } = props;
+    const { fen, uci, rating } = task;
+
+    const solve = uci ? uci : "";
 
     const [status, setStatus] = useState(SolveStatus.inProgress);
     const [completed, setCompleted] = useState(false);
@@ -49,7 +52,7 @@ export const BoardContextProvider: FC<Props> = ({children}) => {
             solve: playerSteps,
             aiSteps,
             side: side.current,
-            rating: 2100,
+            rating,
             status,
             setStatus,
             completed,

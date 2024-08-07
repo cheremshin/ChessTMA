@@ -1,4 +1,8 @@
 export interface TaskDTO {
+    task: Task;
+}
+
+export interface Task {
     id: string; 
     fen: string;
     init_step: string;
@@ -6,4 +10,3 @@ export interface TaskDTO {
     rating: number;
     rating_deviation: number;
 }
-

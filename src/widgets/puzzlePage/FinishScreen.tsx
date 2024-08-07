@@ -4,17 +4,24 @@ import { BoardContext } from "./BoardContext";
 
 import styles from "./FinishScreen.module.css";
 import Link from "next/link";
+import { redirect, useRouter } from "next/navigation";
 
 
 const FinishScreen = () => {
     const { status, completed } = useContext(BoardContext);
     const [visible, setVisible] = useState(false);
+    const router = useRouter();
+
 
     useEffect(() => {
         setTimeout(() => {
             setVisible(completed)
         }, 300);
     }, [completed]);
+
+    const handleNextClick = () => {
+        window.location.reload();
+    }
 
     return (
         <>
@@ -25,12 +32,12 @@ const FinishScreen = () => {
                             Вы справились с задачей!
                         </div>
                         <div className="flex mt-auto mb-[30px] gap-5">
-                            <a href="/" className={styles.button}>
+                            <Link href="/" className={styles.button}>
                                 На главную
-                            </a>
-                            <a href="/puzzle" className={styles.button}>
+                            </Link>
+                            <button onClick={handleNextClick} className={styles.button}>
                                 Следующая
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>

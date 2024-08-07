@@ -12,6 +12,8 @@
     "@tanstack/react-query": "^5.50.1",
     "@telegram-apps/sdk-react": "^1.1.0",
     "chess.js": "^1.0.0-beta.8",
+    "mobx": "^6.13.1",
+    "mobx-react-lite": "^4.0.7",
     "next": "14.2.4",
     "react": "^18",
     "react-chessboard": "^4.6.0",
