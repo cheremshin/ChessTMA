@@ -1,15 +1,28 @@
 ## Getting Started
+Если ничего не установлено, см From scratch
 
-First, run the development server:
-
+Запуск прода
 ```bash
-npm run dev
-# or
+yarn build
+yarn start
+```
+
+## From scratch
+Устанавливаем Node.js
+
+Устанавливаем сборщик `yarn`
+```bash
+npm install --global yarn
+```
+
+Обновляем зависимости
+```
+yarn install
+```
+
+Запускаем dev сервер
+```bash
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
