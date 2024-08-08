@@ -13,6 +13,7 @@ import { Task } from "@/shared/types/api/tasks/TaskDTO";
 
 
 export const BoardContext = createContext<Game>({
+    task_id: "",
     fen: "",
     solve: [],
     aiSteps: [],
@@ -48,6 +49,7 @@ export const BoardContextProvider: FC<Props> = (props) => {
 
     return (
         <BoardContext.Provider value={{
+            task_id: task.id,
             fen,
             solve: playerSteps,
             aiSteps,

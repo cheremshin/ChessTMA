@@ -30,7 +30,7 @@ const UserRectangle = () => {
             {/* Rating */}
             <div className="text-white flex flex-col m-[5px] mt-[8px] text-center">
                 <span className="font-normal text-sm leading-4">Рейтинг</span>
-                <span className="font-bold text-xl leading-6">{rating}</span>
+                <span className="font-bold text-xl leading-6">{Math.round(rating).toFixed(0)}</span>
             </div>
         </div>
     );

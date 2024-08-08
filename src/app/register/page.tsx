@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import useTelegramInitData from "@/shared/hooks/useTelegramInitData";
 import { useFetch } from "@/shared/hooks/useFetch";
 import { UserDTO, User } from "@/shared/types/api/users/UserDTO";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 const Page = () => {
-    const { push } = useRouter();
+    const router = useRouter();
     const tgData = useTelegramInitData();
-    const tgID = tgData?.user?.id || 127;
+    const tgID = tgData?.user?.id || 140;
 
     const { isLoading, isError, fetchData } = useFetch<UserDTO, User>(`/users/${tgID}`, 'POST');
 
@@ -18,20 +18,18 @@ const Page = () => {
 
     useEffect(() => {
         if (shouldRetry) {
-            fetchData((object: UserDTO) => object.user).then(() => {
-                setShouldRetry(false);
-
-                if (!isLoading && !isError) {
-                    console.log("Successfuly registered");
-                }
-            });
-            push("/");
+            fetchData((object: UserDTO) => object.user).then();
+            setShouldRetry(false);
+            if (!isLoading && !isError) {
+                console.log("Successfuly registered");
+            }
+            router.back();
         }
     }, [shouldRetry]);
 
     const handleRetry = () => {
         setShouldRetry(true);
-        push("/");
+        router.back();
     }
 
     return !isError ? (

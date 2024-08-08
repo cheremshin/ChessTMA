@@ -19,6 +19,7 @@ export enum SolveStatus {
  * @param setStatus Мутатор статуса
  */
 export type Game = {
+    task_id: string;
     fen: string;
     solve: string[];
     aiSteps: string[];
