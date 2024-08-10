@@ -1,18 +1,18 @@
-import { TagDTO } from "./TagDTO";
+import { TagsDTO } from "./TagDTO";
 
 
 export interface GetTagsResponse {
-    tags: TagDTO[];
+    tags: TagsDTO[];
 }
 
 export interface CreateTagResponse {
-    tag: TagDTO;
+    tag: TagsDTO;
 }
 
 export interface GetTagResponse {
-    tag: TagDTO;
+    tag: TagsDTO;
 }
 
 export interface UpdateTagResponse {
-    tag: TagDTO;
+    tag: TagsDTO;
 }

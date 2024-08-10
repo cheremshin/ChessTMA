@@ -19,7 +19,15 @@ export interface IUserContext {
     setRating: (value: number) => void;
 }
 
-export const UserContext = createContext<IUserContext>(undefined as any);
+export const UserContext = createContext<IUserContext>({
+    isAuthorized: false,
+    id: -1,
+    coins: 0,
+    rating: 0,
+    setId: (number) => {},
+    setCoins: (number) => {},
+    setRating: (number) => {},
+});
 
 interface Props {
     children: ReactNode;

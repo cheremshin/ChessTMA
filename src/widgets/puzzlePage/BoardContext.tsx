@@ -14,7 +14,7 @@ import { Task } from "@/shared/types/api/tasks/TaskDTO";
 
 export const BoardContext = createContext<Game>({
     task_id: "",
-    fen: "",
+    fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
     solve: [],
     aiSteps: [],
     side: "white",
