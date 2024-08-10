@@ -1,6 +1,7 @@
 import { FC } from "react";
 
 import { Tag } from "@/shared/types/api/themes/TagDTO";
+import { useRouter } from "next/navigation";
 
 
 export type PropsT = {
@@ -9,13 +10,17 @@ export type PropsT = {
 
 const ThemeBlock =  (props: PropsT) => {
     const { tag } = props;
+    const router = useRouter();
 
     const handleRedirect = () => {
-        console.log(tag.name);
+        console.log(
+            `/puzzle/${tag.id}`
+        );
+        router.push(`/puzzle/${tag.id}`);
     }
 
     return (
-        <button className="
+        <div className="
             bg-[#232323]
             text-white
             p-3
@@ -25,7 +30,7 @@ const ThemeBlock =  (props: PropsT) => {
         " onClick={handleRedirect}>
             <div className="font-semibold">{tag.name}</div>
             <div className="font-light">{tag.description}</div>
-        </button>
+        </div>
     );
 };
 

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 const Page = () => {
     const router = useRouter();
     const tgData = useTelegramInitData();
-    const tgID = tgData?.user?.id || 140;
+    const tgID = tgData?.user?.id ? tgData?.user?.id : 110;
 
     const { isLoading, isError, fetchData } = useFetch<UserDTO, User>(`/users/${tgID}`, 'POST');
 
