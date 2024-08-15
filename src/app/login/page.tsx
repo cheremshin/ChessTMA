@@ -13,7 +13,7 @@ const Page = () => {
     const { setId, setCoins, setRating } = useUserData();
 
     const tgData = useTelegramInitData();
-    const tgID = tgData?.user?.id ? tgData?.user?.id : 110;
+    const tgID = tgData?.user?.id;
 
     const { data, isLoading, isError, fetchData } = useFetch<UserDTO, User>(`/users/${tgID}`);
 

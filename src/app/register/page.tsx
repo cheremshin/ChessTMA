@@ -10,10 +10,10 @@ import { useRouter } from "next/navigation";
 const Page = () => {
     const router = useRouter();
     const tgData = useTelegramInitData();
-    const tgID = tgData?.user?.id ? tgData?.user?.id : 110;
+
+    const tgID = tgData?.user?.id;
 
     const { isLoading, isError, fetchData } = useFetch<UserDTO, User>(`/users/${tgID}`, 'POST');
-
     const [ shouldRetry, setShouldRetry ] = useState(true);
 
     useEffect(() => {
@@ -22,8 +22,8 @@ const Page = () => {
             setShouldRetry(false);
             if (!isLoading && !isError) {
                 console.log("Successfuly registered");
+                router.back();
             }
-            router.back();
         }
     }, [shouldRetry]);
 
