@@ -1,18 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { FC } from "react";
-
-import { TelegramWebApps } from "telegram-webapps-types-new";
 
 import Icon from "../../../public/avatar_sample.png";
 import { useUserData } from "@/app/context/userContext";
+import useTelegramInitData from "@/shared/hooks/useTelegramInitData";
 
 
 const UserRectangle = () => {
     const { rating } = useUserData();
+    const tgData = useTelegramInitData();
 
-    const IMAGE_MOCK = Icon;
+    const IMAGE_MOCK = tgData?.user?.photo_url ? tgData.user.photo_url : Icon ;
 
     return (
         <div className=" w-[150px] h-[50px] flex items-center bg-[#0F0F0F] rounded-full">

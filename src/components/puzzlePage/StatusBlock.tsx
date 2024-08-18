@@ -1,6 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { BoardContext } from "@/widgets/puzzlePage/BoardContext";
 import { SolveStatus } from "@/shared/types/board";
+import { useUserData } from "@/app/context/userContext";
+import { SolveTaskRequest } from "@/shared/types/api/tasks/Requests";
+import { useFetch } from "@/shared/hooks/useFetch";
+import { SolveTaskResponse } from "@/shared/types/api/tasks/Responses";
 
 
 type Block = {
@@ -11,7 +15,26 @@ type Block = {
 
 
 const StatusBlock = () => {
-    const { status } = useContext(BoardContext);
+    const { id } = useUserData();
+    const { task_id, status } = useContext(BoardContext);
+
+    const body: SolveTaskRequest = {
+        user_id: id,
+        task_id,
+        result: false,
+    };
+
+    const { data, fetchData } = useFetch<SolveTaskResponse, SolveTaskResponse, SolveTaskRequest>("/tasks/solve", "POST", body);
+
+    useEffect(() => {
+        if (status == SolveStatus.fail) {
+            fetchData((object: SolveTaskResponse) => object).then();
+        } else if (status == SolveStatus.success) {
+            body.result = true;
+            fetchData((object: SolveTaskResponse) => object).then();
+        }
+    }, [status]);
+
     const block: Block = {
         text: "",
         color: "",

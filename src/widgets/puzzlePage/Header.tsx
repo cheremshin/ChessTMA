@@ -13,7 +13,7 @@ interface Props {
 }
 
 
-const Header: FC<Props> = (props) => {
+export const Header: FC<Props> = (props) => {
     return (
         <header className="
             w-full
@@ -30,5 +30,3 @@ const Header: FC<Props> = (props) => {
         </header>
     );
 };
-
-export default Header;

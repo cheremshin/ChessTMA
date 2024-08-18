@@ -6,6 +6,9 @@ import { useFetch } from "@/shared/hooks/useFetch";
 import { UserDTO, User } from "@/shared/types/api/users/UserDTO";
 import { useRouter } from "next/navigation";
 
+import RegisterPage from "@/pages/register/page";
+import { RegisterContextProvider } from "@/widgets/register/RegisterContext";
+
 
 const Page = () => {
     const router = useRouter();
@@ -17,33 +20,29 @@ const Page = () => {
     const [ shouldRetry, setShouldRetry ] = useState(true);
 
     useEffect(() => {
-        if (shouldRetry) {
+        if (shouldRetry && tgID) {
             fetchData((object: UserDTO) => object.user).then();
             setShouldRetry(false);
+
             if (!isLoading && !isError) {
-                console.log("Successfuly registered");
                 router.back();
             }
         }
-    }, [shouldRetry]);
+    }, [shouldRetry, tgID, fetchData]);
 
     const handleRetry = () => {
         setShouldRetry(true);
         router.back();
     }
 
-    return !isError ? (
-        <div className="w-full h-full flex items-center justify-center">
-            Создание пользователя...
-        </div>
-    ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-9">
-            <p>Ошибка создания пользователя</p>
-            <button onClick={handleRetry} className="bg-black text-white rounded-lg p-2">
-                Попробовать снова
-            </button>
-        </div>
-    )
+    return (
+        <RegisterContextProvider contextData={{
+            isError,
+            handleRetry,
+        }}>
+            <RegisterPage />
+        </RegisterContextProvider>
+    );
 }
 
 export default Page;

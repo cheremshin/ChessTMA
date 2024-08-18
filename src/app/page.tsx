@@ -1,21 +1,19 @@
 "use client";
 
 import { useContext, useEffect } from "react";
-import { observer } from "mobx-react-lite";
 import { webAppContext } from "./context";
 
-import MainPage from "@/pages/mainPage/page";
-import useTelegramInitData from "@/shared/hooks/useTelegramInitData";
-import { useFetch } from "@/shared/hooks/useFetch";
-import { User, UserDTO } from "@/shared/types/api/users/UserDTO";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useUserData } from "./context/userContext";
 
+import MainPage from "@/pages/mainPage/page";
+import LoadingSpinner from "@/widgets/loadingSpinner/LoadingSpinner";
 
-export default observer(function Home() {
+
+const Home = () => {
 	const router = useRouter();
+	const app = useContext(webAppContext);
 	const { isAuthorized } = useUserData();
-  	const app = useContext(webAppContext);
 
 	useEffect(() => {
 		if (!isAuthorized) {
@@ -23,14 +21,11 @@ export default observer(function Home() {
 		}
 	}, []);
 
-  	return (
-    	<>
-        	{app.version? (
-            	<MainPage />
-        	) : (
-            	<div className="h-full w-full p-30 bg-gray-100 rounded-2xl">
-            	</div>
-        	)}
-    	</>
-  );
-});
+  	return app.version && isAuthorized ? (
+		<MainPage />
+	) : (
+		<LoadingSpinner />
+	);
+};
+
+export default Home;

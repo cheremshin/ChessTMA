@@ -31,8 +31,6 @@ export const useFetch = <T, V, K = undefined>(endpoint: string, method = 'GET', 
             const data: T = await response.json() as T;
             const decoded: V = callback(data);
 
-            console.log("fetched",data);
-            console.log("decoded",decoded);
             setData(decoded);
         } catch (error) {
             console.log("Error occured when fetch:", error);

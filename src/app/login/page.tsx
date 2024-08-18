@@ -3,10 +3,10 @@
 import { useFetch } from "@/shared/hooks/useFetch";
 import useTelegramInitData from "@/shared/hooks/useTelegramInitData";
 import { User, UserDTO } from "@/shared/types/api/users/UserDTO";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useUserData } from "../context/userContext";
-
+import LoginPage from "@/pages/login/page";
 
 const Page = () => {
     const router = useRouter();
@@ -18,8 +18,10 @@ const Page = () => {
     const { data, isLoading, isError, fetchData } = useFetch<UserDTO, User>(`/users/${tgID}`);
 
     useEffect(() => {
-        fetchData((object: UserDTO) => object.user).then();
-    }, []);
+        if (tgID) {
+            fetchData((object: UserDTO) => object.user).then();
+        }
+    }, [tgID, fetchData]);
 
     useEffect(() => {
     	if (!isLoading && isError) {
@@ -36,9 +38,7 @@ const Page = () => {
     }, [isLoading]);
 
     return (
-        <div className="w-full h-full bg-white flex justify-center content-center">
-            Выполняется вход
-        </div>
+        <LoginPage />
     );
 };
 

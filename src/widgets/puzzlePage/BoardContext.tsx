@@ -36,6 +36,8 @@ export const BoardContextProvider: FC<Props> = (props) => {
 
     const solve = uci ? uci : "";
 
+    console.log(solve);
+
     const [status, setStatus] = useState(SolveStatus.inProgress);
     const [completed, setCompleted] = useState(false);
 
