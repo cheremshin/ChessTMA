@@ -27,7 +27,7 @@ export default function RootLayout({
         <meta name="HandheldFriendly" content="True"/>
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-white`}>
         <Providers>
           {children}
         </Providers>
