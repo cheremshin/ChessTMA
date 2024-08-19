@@ -25,6 +25,7 @@ export const Board = () => {
     } = useContext(BoardContext);
 
     const aiStepsRef = useRef<string[]>(aiSteps);
+    const playerStepsRef = useRef<string[]>(solve);
     const [game, setGame] = useState(new Chess(fen));
 
     const [moveFrom, setMoveFrom] = useState<string>("");
@@ -166,7 +167,7 @@ export const Board = () => {
                 return;
             }
 
-            const valid = solve[0] == move.from + move.to;
+            const valid = playerStepsRef.current.at(0) == move.from + move.to;
 
             if (!valid) {
                 setTimeout(() => {
@@ -175,7 +176,7 @@ export const Board = () => {
                     setStatus(SolveStatus.fail);
                 }, 300);
             } else {
-                solve.shift();
+                playerStepsRef.current.shift();
                 showLastMove(move.from, move.to);
                 setTimeout(makeAIStep, 300);
             }

@@ -36,7 +36,6 @@ const PuzzlePage = () => {
     // Call fetch
     useEffect(() => {
         if (id) {
-            console.log("Call fetch");
             fetchData((object: Task) => object).then();
         } else {
             router.push("/login");
