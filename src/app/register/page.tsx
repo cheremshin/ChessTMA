@@ -17,27 +17,27 @@ const Page = () => {
     const tgID = tgData?.user?.id;
 
     const { isLoading, isError, fetchData } = useFetch<UserDTO, User>(`/users/${tgID}`, 'POST');
-    const [ shouldRetry, setShouldRetry ] = useState(true);
 
     useEffect(() => {
-        if (shouldRetry && tgID) {
+        if (tgID) {
             fetchData((object: UserDTO) => object.user).then();
-            setShouldRetry(false);
-
-            if (!isLoading && !isError) {
-                router.back();
-            }
         }
-    }, [shouldRetry, tgID, fetchData]);
+    }, [tgID, fetchData]);
+
+    useEffect(() => {
+        if (!isError && !isLoading) {
+            handleRetry();
+        }
+    }, [isLoading, isError]);
 
     const handleRetry = () => {
-        setShouldRetry(true);
         router.back();
     }
 
     return (
         <RegisterContextProvider contextData={{
             isError,
+            isLoading,
             handleRetry,
         }}>
             <RegisterPage />

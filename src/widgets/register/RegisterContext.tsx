@@ -3,11 +3,13 @@ import { createContext, ReactNode, FC } from "react";
 
 export type RegisterContextT = {
     isError: boolean,
+    isLoading: boolean,
     handleRetry: () => void;
 };
 
 export const RegisterContext = createContext<RegisterContextT>({
     isError: false,
+    isLoading: true,
     handleRetry: () => {},
 });
 
@@ -23,6 +25,7 @@ export const RegisterContextProvider: FC<Props> = (props) => {
     return (
         <RegisterContext.Provider value={{
             isError: contextData.isError,
+            isLoading: contextData.isLoading,
             handleRetry: contextData.handleRetry,
         }}>
             { children }
