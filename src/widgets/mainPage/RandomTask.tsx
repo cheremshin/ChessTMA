@@ -10,7 +10,7 @@ import Picture from "../../../public/random_task.png"
 
 const RandomTask = () => {
     return (
-        <div className="pt-14 mt-auto rounded-l-[20px] text-white bg-black max-h-[24rem] items-end">
+        <div className="pt-8 mt-auto rounded-l-[20px] text-white bg-black max-h-[24rem] items-end">
             <div className="p-5 w-full h-full flex flex-col items-center">
                 <p className=" mt-auto font-semibold text-l mb-[22px]">{widgetData.title}</p>
                 <p className="font-light leading-tight text-xs">{widgetData.description}</p>

@@ -28,8 +28,8 @@ const ThemeBlock =  (props: PropsT) => {
             flex-col
             rounded-xl
         " onClick={handleRedirect}>
-            <div className="font-semibold">{tag.name}</div>
-            <div className="font-light">{tag.description}</div>
+            <div className="font-semibold text-sm">{tag.name}</div>
+            <div className="font-light text-xs">{tag.description}</div>
         </div>
     );
 };
