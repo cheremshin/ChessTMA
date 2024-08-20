@@ -16,7 +16,10 @@ export const WebAppProvider = ({ children }: IProps) => {
 
     useEffect(() => {
         if (!app) return;
-        if (app.ready) app.ready();
+        if (app.ready) {
+            app.ready();
+            app.expand();
+        }
     }, [app]);
 
     return (
